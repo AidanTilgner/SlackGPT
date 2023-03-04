@@ -10,8 +10,13 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
 });
 
-// All the room in the world for your code
+app.message(":wave:", async ({ message, say }) => {
+  console.log("message", message);
+  await say(`Hello, <@${message.user}>`);
+});
+
 app.event("app_home_opened", async ({ event, client, context }) => {
+  console.log("event", event);
   try {
     /* view.publish is the method that your app uses to push a view to the Home tab */
     const result = await client.views.publish({
