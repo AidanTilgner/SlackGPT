@@ -1,0 +1,70 @@
+{
+    "workbench.colorTheme": "SynthWave '84",
+    "emmet.excludeLanguages": ["markdown"],
+    "files.associations": {
+      "*.blade.php": "php",
+      "*.tpl": "html"
+    },
+    "[html]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "emmet.triggerExpansionOnTab": true,
+    "blade.format.enable": true,
+    "emmet.includeLanguages": {
+      "blade": "blade"
+    },
+    "[blade]": {
+      "editor.autoClosingBrackets": "always"
+    },
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "tabnine.experimentalAutoImports": true,
+    "gitlens.advanced.messages": {
+      "suppressGitMissingWarning": true
+    },
+    "editor.inlineSuggest.enabled": true,
+    "kite.showWelcomeNotificationOnStartup": false,
+    "[typescriptreact]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+      "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+    },
+    "[jsonc]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "github.copilot.enable": {
+      "*": true,
+      "yaml": true,
+      "plaintext": true,
+      "markdown": true,
+      "html": true,
+      "css": true,
+      "typescript": true
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "html.format.templating": true,
+    "eslint.format.enable": true,
+    "explorer.confirmDelete": false,
+    "[python]": {
+      "editor.defaultFormatter": "ms-python.python",
+      "editor.formatOnType": true
+    },
+    "[php]": {
+      "editor.defaultFormatter": "DEVSENSE.phptools-vscode"
+    },
+    "svelte.enable-ts-plugin": true,
+    "[dockerfile]": {
+      "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+    },
+    "window.zoomLevel": 1,
+    "[nim]": {
+      "editor.defaultFormatter": "nimsaem.nimvscode",
+      "editor.formatOnSave": true
+    }
+  }
+  
