@@ -17,6 +17,11 @@ app.message(":wave:", async ({ message, say }) => {
   await say(`Hello, <@${message.user}>`);
 });
 
+app.message("hello", async ({ message, say }) => {
+  // say() sends a message to the channel where the event was triggered
+  await say(`Hey there <@${message.user}>!`);
+});
+
 app.event("app_home_opened", async ({ event, client, context }) => {
   console.log("event", event);
   try {
