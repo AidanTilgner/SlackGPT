@@ -1,4 +1,10 @@
-import { App, LogLevel, directMention, BlockAction } from "@slack/bolt";
+import {
+  App,
+  LogLevel,
+  directMention,
+  BlockAction,
+  GenericMessageEvent,
+} from "@slack/bolt";
 import "reflect-metadata";
 import { config } from "dotenv";
 import { database, onInitialized, setInitializationStatus } from "./database";
@@ -8,6 +14,7 @@ import {
   checkUserHasOpenAIApiKeyAndPromptIfNot,
 } from "./middleware/users";
 import { addOpenAIKeyToUser } from "./database/queries/users";
+import { getChatCompletionBySlackID } from "./utils/openai";
 
 config();
 
@@ -65,7 +72,26 @@ app.action("openai_api_key", async ({ ack, body, say, client }) => {
 
 app.use(checkUserHasOpenAIApiKeyAndPromptIfNot);
 
-mapMessagesToApp(app);
+app.message("prompt:", async ({ message, say }) => {
+  console.log("Message: ", message);
+  const prompt = (message as GenericMessageEvent)?.text
+    ?.split("prompt:")[1]
+    .trim();
+  if (!prompt) {
+    say("Please provide a prompt after the `prompt:` keyword");
+    return;
+  }
+  console.log("Got prompt: ", prompt);
+  const response = await getChatCompletionBySlackID(
+    prompt,
+    (message as GenericMessageEvent).user,
+    (message as GenericMessageEvent).channel
+  );
+  console.log("Got response: ", response);
+  if (response) {
+    say(response);
+  }
+});
 
 (async () => {
   // Start your app

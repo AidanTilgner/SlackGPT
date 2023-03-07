@@ -82,3 +82,21 @@ export const addOpenAIKeyToUser = async (slackID: string, key: string) => {
     return false;
   }
 };
+
+export const getOpenAIKeyForUser = async (slackID: string) => {
+  try {
+    const user = await database.manager.findOne(entities.User, {
+      where: { slack_id: slackID },
+      relations: ["api_keys"],
+    });
+    if (!user) return false;
+
+    const openAIKey = user.api_keys.find((key) => key.type === "openai");
+    if (!openAIKey) return false;
+
+    return openAIKey.key;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};

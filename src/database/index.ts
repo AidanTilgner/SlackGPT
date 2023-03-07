@@ -2,13 +2,15 @@ import { DataSource } from "typeorm";
 import { config } from "dotenv";
 import { User } from "./entities/user";
 import { ApiKey } from "./entities/apikey";
+import { Conversation } from "./entities/conversation";
+import { Message } from "./entities/message";
 import path from "path";
 
 config();
 
 const dataDir = path.join(process.cwd(), "data/database.sqlite");
 
-export const entities = { User, ApiKey };
+export const entities = { User, ApiKey, Conversation, Message };
 
 export const database = new DataSource({
   type: "sqlite",
