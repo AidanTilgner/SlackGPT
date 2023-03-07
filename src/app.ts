@@ -13,8 +13,12 @@ import {
   checkUserExistsAndAddIfNot,
   checkUserHasOpenAIApiKeyAndPromptIfNot,
 } from "./middleware/users";
-import { addOpenAIKeyToUser } from "./database/queries/users";
+import {
+  addOpenAIKeyToUser,
+  clearAllAPIKeysForUser,
+} from "./database/queries/users";
 import { getChatCompletionBySlackID } from "./utils/openai";
+import { getRandomThinkingText } from "./utils/text";
 
 config();
 
@@ -80,6 +84,7 @@ app.message("prompt:", async ({ message, say }) => {
     say("Please provide a prompt after the `prompt:` keyword");
     return;
   }
+  say(getRandomThinkingText());
   const response = await getChatCompletionBySlackID(
     prompt,
     (message as GenericMessageEvent).user,
@@ -87,6 +92,24 @@ app.message("prompt:", async ({ message, say }) => {
   );
   if (response) {
     say(response);
+  }
+});
+
+app.command("/removeKeys", async ({ command, client }) => {
+  const removed = await clearAllAPIKeysForUser(command.user_id);
+
+  if (removed) {
+    client.chat.postEphemeral({
+      text: "Successfully removed your keys!",
+      channel: command.channel_id,
+      user: command.user_id,
+    });
+  } else {
+    client.chat.postEphemeral({
+      text: "There was an error removing your keys. Please try again.",
+      channel: command.channel_id,
+      user: command.user_id,
+    });
   }
 });
 

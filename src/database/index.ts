@@ -15,7 +15,7 @@ export const entities = { User, ApiKey, Conversation, Message };
 export const database = new DataSource({
   type: "sqlite",
   database: dataDir, // todo: This should probably be an env???????? idk yet tbh
-  synchronize: process.env.NODE_ENV === "development",
+  synchronize: true,
   entities: Object.values(entities),
 });
 

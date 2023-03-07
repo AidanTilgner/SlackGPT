@@ -9,6 +9,13 @@ import {
   addMessageToConversationOrCreateIfNotExists,
   getConversationMessages,
 } from "../database/queries/converations";
+import { config } from "dotenv";
+
+config();
+
+const initialPrompt =
+  process.env.INITIAL_CHATGPT_PROMPT ||
+  "You are a gifted software engineer, who is great at answering questions related to all aspects of the field. For this conversation you also will want to remember that you are in a Slack channel.";
 
 const getChatCompletion = async (
   prompt: string,
@@ -38,8 +45,7 @@ const getChatCompletion = async (
   }[] = [
     {
       role: "system",
-      content:
-        "You are a gifted software engineer, who communicates with teammates via a slack channel.",
+      content: initialPrompt,
     },
     ...previousMessages.map((message) => ({
       role: message.role as "user" | "system",

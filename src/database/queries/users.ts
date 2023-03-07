@@ -99,3 +99,20 @@ export const getOpenAIKeyForUser = async (slackID: string) => {
     return false;
   }
 };
+
+export const clearAllAPIKeysForUser = async (slackID: string) => {
+  try {
+    const user = await database.manager.findOne(entities.User, {
+      where: { slack_id: slackID },
+      relations: ["api_keys"],
+    });
+    if (!user) return false;
+
+    await database.manager.remove(user.api_keys);
+
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
