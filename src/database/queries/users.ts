@@ -45,7 +45,6 @@ export const checkUserForOpenAIAPIKey = async (slackID: string) => {
       relations: ["api_keys"],
     });
     if (!user) return false;
-    console.log("Api keys: ", user.api_keys);
 
     const openAIKey = user.api_keys.find((key) => key.type === "openai");
     if (!openAIKey) return false;

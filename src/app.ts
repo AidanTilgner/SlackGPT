@@ -73,7 +73,6 @@ app.action("openai_api_key", async ({ ack, body, say, client }) => {
 app.use(checkUserHasOpenAIApiKeyAndPromptIfNot);
 
 app.message("prompt:", async ({ message, say }) => {
-  console.log("Message: ", message);
   const prompt = (message as GenericMessageEvent)?.text
     ?.split("prompt:")[1]
     .trim();
@@ -81,13 +80,11 @@ app.message("prompt:", async ({ message, say }) => {
     say("Please provide a prompt after the `prompt:` keyword");
     return;
   }
-  console.log("Got prompt: ", prompt);
   const response = await getChatCompletionBySlackID(
     prompt,
     (message as GenericMessageEvent).user,
     (message as GenericMessageEvent).channel
   );
-  console.log("Got response: ", response);
   if (response) {
     say(response);
   }

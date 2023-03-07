@@ -60,7 +60,6 @@ export const addMessageToConversationOrCreateIfNotExists = async (
       const added = addMessageToConversation(channelID, role, content);
       return added;
     }
-    console.log("Adding new message to conversation: ", conversation);
     const added = addMessageToConversation(channelID, role, content);
 
     return added;
@@ -77,8 +76,6 @@ export const getConversationMessages = async (channelID: string) => {
       relations: ["messages"],
     });
     if (!conversation) return [];
-    console.log("Conversation: ", conversation);
-    console.log("Messages: ", conversation.messages);
     return conversation.messages;
   } catch (error) {
     console.error(error);

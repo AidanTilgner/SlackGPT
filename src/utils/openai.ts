@@ -27,12 +27,10 @@ const getChatCompletion = async (
   );
 
   if (!added) return "There was an error, please try again.";
-  console.log("Added: ", added);
 
   const previousMessages = await getConversationMessages(channelID);
 
   if (!previousMessages) return "There was an error, please try again.";
-  console.log("Previous messages: ", previousMessages);
 
   const totalMessages: {
     role: ChatCompletionRequestMessageRoleEnum;
@@ -53,14 +51,10 @@ const getChatCompletion = async (
     },
   ];
 
-  console.log("Total messages: ", totalMessages);
-
   const response = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: [...totalMessages],
   });
-
-  console.log("Response: ", response);
 
   const choice = response.data.choices[0];
 
