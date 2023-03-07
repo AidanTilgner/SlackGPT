@@ -95,7 +95,8 @@ app.message("prompt:", async ({ message, say }) => {
   }
 });
 
-app.command("/removeKeys", async ({ command, client }) => {
+app.command(/(removeKeys|removekeys)/, async ({ command, client, ack }) => {
+  ack();
   const removed = await clearAllAPIKeysForUser(command.user_id);
 
   if (removed) {
