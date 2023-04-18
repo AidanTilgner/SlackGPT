@@ -88,6 +88,10 @@ const getChatCompletion = async (
         role: message.role as "user" | "system",
         content: message.content,
       })),
+      {
+        role: "user",
+        content: prompt,
+      },
     ];
 
     const response = await openai.createChatCompletion({

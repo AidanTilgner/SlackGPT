@@ -169,7 +169,6 @@ export const checkUserApiKeyHasEncounteredError = async (
 
     const apiKey = user.api_keys.find((k) => k.type === type);
 
-    console.log("Checking api key: ", apiKey);
     if (!apiKey) return false;
     if (!apiKey.encounteredError) return false;
 
