@@ -3,6 +3,7 @@ import {
   checkUserExistsBySlackID,
   addUserBySlackID,
   checkUserForOpenAIAPIKey,
+  checkUserApiKeyHasEncounteredError,
 } from "../database/queries/users";
 
 export async function checkUserExistsAndAddIfNot({ payload, next }: any) {
@@ -46,6 +47,46 @@ export const checkUserHasOpenAIApiKeyAndPromptIfNot = async ({
           text: {
             type: "mrkdwn",
             text: "Looks like you're missing an OpenAI API key! Create one at https://platform.openai.com/account/api-keys, and then paste it below.",
+          },
+        },
+        {
+          type: "input",
+          block_id: "openai_api_key",
+          dispatch_action: true,
+          label: {
+            type: "plain_text",
+            text: "Enter an API key",
+          },
+          element: {
+            type: "plain_text_input",
+            action_id: "openai_api_key",
+            placeholder: {
+              type: "plain_text",
+              text: "Enter your key here...",
+            },
+          },
+        },
+      ],
+    });
+    return;
+  }
+
+  const encounteredError = await checkUserApiKeyHasEncounteredError(
+    slackID,
+    "openai"
+  );
+
+  if (encounteredError) {
+    client.chat.postEphemeral({
+      text: "There's been an error with your API key. Please create a new one at https://platform.openai.com/account/api-keys, and then paste it below.",
+      channel: event.channel,
+      user: event.user,
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: "There's been an error with your API key. Please create a new one at https://platform.openai.com/account/api-keys, and then paste it below.",
           },
         },
         {

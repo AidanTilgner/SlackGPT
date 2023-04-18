@@ -19,6 +19,11 @@ export class ApiKey {
   @Column()
   type!: string;
 
+  @Column({
+    nullable: true,
+  })
+  encounteredError!: string;
+
   @ManyToOne(() => User, (user) => user.api_keys)
   user!: User;
 

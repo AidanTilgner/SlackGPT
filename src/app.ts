@@ -49,7 +49,9 @@ app.action("openai_api_key", async ({ ack, body, say, client }) => {
   if ((body as any).state.values.openai_api_key.openai_api_key.value) {
     const added = await addOpenAIKeyToUser(
       body.user.id,
-      (body as any).state.values.openai_api_key.openai_api_key.value
+      (body as any).state.values.openai_api_key.openai_api_key.value,
+      "openai",
+      true
     );
 
     if (added) {
